@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+body {
+    font-family: "Open Sans", serif;
+}
+
+.container {
+    padding: 10px;
+    width: 100%;
+  }
+  
+  @media (min-width: 500px) {
+    .container {
+      padding: 20px;
+      font-size: 1.5em;
+    }
+  }
+  
+  @media (min-width: 800px) {
+    .containerы {
+      padding: 40px;
+      font-size: 2em;
+    }
+  }
+
+.wrapper {
+    border: 2px solid #fdfdfd;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: rgba(45, 176, 224, 1);
+    background: -moz-linear-gradient(45deg, rgba(45, 176, 224, 1) 0%, rgba(96, 40, 168, 1) 100%);
+    background: -webkit-linear-gradient(45deg, rgba(45, 176, 224, 1) 0%, rgba(96, 40, 168, 1) 100%);
+    background: -o-linear-gradient(45deg, rgba(45, 176, 224, 1) 0%, rgba(96, 40, 168, 1) 100%);
+    background: -ms-linear-gradient(45deg, rgba(45, 176, 224, 1) 0%, rgba(96, 40, 168, 1) 100%);
+    background: linear-gradient(45deg, rgba(45, 176, 224, 1) 0%, rgba(96, 40, 168, 1) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#2db0e0', endColorstr='#6028a8', GradientType=1);
+}
+
+.form {
+    margin:0 auto;
+    border: 2px solid #fdfdfd;
+    padding-top: 80px;
+}
+
+.info {
+    margin-top: -70px;
+    background-size: cover;
+    text-align: center;
+    color: #000;
+}
+
+input[type="text"] {
+    text-align: center;
+    background-color: transparent;
+    border: 0;
+    border-bottom: solid 2px #113a65;
+    width: 35%;
+    padding-bottom: 6px;
+    color: #fff;
+    font-weight: lighter;
+    margin-bottom: 10px;
+    font-size: 20px;
+    outline: none;
+}
+
+input::-webkit-input-placeholder {
+    color: #103a65;
+}
+
+input::-moz-placeholder {
+    color: #103a65;
+}
+
+button {
+    border: 2px solid #103a65;
+    border-bottom: 4px solid #103a65;
+    padding: 3px 20px;
+    background-color: #235d9c;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.con{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+select {
+    padding-top: 60px;
+    border: 1px solid #103a65;
+    padding: 3px 10px;;
+    border-radius: 2px;
+    cursor: pointer;
+    background-color: #235d9c;
+    color: #fff;
+    outline: none;
+    margin-bottom: 10px;
+}
+
+button:active {
+    border-bottom: 2px solid transparent;
+    border-color: transparent;
+    position: relative;
+    top: 2px;
+}
+
+.info h4 {
+    font-size: 3em;
+    color: #fff;
+}
+
+.info p {
+    color: #e4e4e4;
+    font-weight: bold;
+}
+
+.infoWeath {
+    width: 100%;
+    font-size: 17px;
+    color: #fff;
+    text-align: center;
+}
+
+.error {
+    color: #041f3c;
+    font-weight: bold;
+}
