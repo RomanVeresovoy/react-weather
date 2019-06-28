@@ -4,7 +4,7 @@ const Weather = props => (
         <div className="infoWeath"> 
             {props.city && 
             <div>
-            <p>Местоположение: {props.city},{props.country}</p>
+            <p>Город: {props.city},{props.country}</p>
             <p>Температура: {props.temp}°С</p>
             <p>Ресурс: {props.resource}</p>
             <p>Последний запрос: {props.date}</p>

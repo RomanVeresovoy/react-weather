@@ -3,8 +3,7 @@ import Info from "./components/info";
 import Form from "./components/form";
 import Weather from "./components/weather";
 
-const API_KEY1 = "85dd40017593db581d452010f9bb2dab";
-const API_KEY2 = "a8523cfc7ddd4112ab4121800191506";
+let cityCurrent = "";
 
 class App extends React.Component {
   state = {
@@ -17,24 +16,18 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.checkIP();
+    this.defineCity();
+    
   }
 
-  checkIP = async () => {
-    let city;
-    await fetch(`http://api.ipstack.com/check?access_key=462ab66cac6243ce4e5c8fd20c89e897`)
+  defineCity = async () => {
+    await fetch(`http://api.ipstack.com/check?access_key=${process.env.REACT_APP_WEATHER_API_KEY3}`)
       .then(response => response.json())
       .then(data => {
-        city = data.city;
+        cityCurrent = data.city;
+        this.forceUpdate();
       })
-      .catch(error => console.log(error));
-    this.getSelect(city)
-  }
-
-  readText = (e) => {
-    e.preventDefault();
-    const city = e.target.elements.city.value;
-    this.getSelect(city);
+      .catch(error => console.error(error));
   }
 
   choiseResource = (city, select) => {
@@ -44,16 +37,16 @@ class App extends React.Component {
       let myKey = localStorage.key(i);
       let keyCity = myKey.slice(0, -1)
       let resource = myKey.slice(-1);
-      if (keyCity == city) {
+      if (keyCity === city) {
         flag = 1;
-        if (resource == "O" && select == 1)
+        if (resource === "O" && Number(select) === 1)
           flag1 = 1;
-        if (resource == "A" && select == 2)
+        if (resource === "A" && Number(select) === 2)
           flag1 = 2;
       }
     }
     if (flag && flag1) {
-      if (flag1 == 1) {
+      if (flag1 === 1) {
         this.writeObjectOpenWeatherMap(city);
       }
       if (flag1 === 2) {
@@ -61,7 +54,7 @@ class App extends React.Component {
       }
     }
     else {
-      if (select == 1)
+      if (Number(select) === 1)
         this.getWeatherOpenWeatherMap(city);
       else
         this.getWeatherResourceApixu(city)
@@ -69,57 +62,50 @@ class App extends React.Component {
   }
 
   writeObjectOpenWeatherMap = (city) => {
-    let obState = JSON.parse(localStorage.getItem(city + "O"))
-    let datePastRequest = obState.date;
+    let data = JSON.parse(localStorage.getItem(city + "O"))
+    let datePastRequest = data.date;
     let dateNow = Date.parse(new Date());
     let time = this.getDate(datePastRequest);
-    if ((dateNow - datePastRequest) > 7200000) {
+    if ((dateNow - datePastRequest) > 7200000)
       this.getWeatherOpenWeatherMap(city);
-    }
-    else {
-      let obState = JSON.parse(localStorage.getItem(city));
-    }
-    this.setState({
-      temp: obState.temp,
-      city: obState.city,
-      country: obState.country,
-      resource: obState.resource,
-      date: time,
-      error: undefined
-    });
+    else
+      this.assignState(data, time);
   }
 
-  writeObjectApixu = (city) =>{
-    let obState = JSON.parse(localStorage.getItem(city + "A"))
-    let datePastRequest = obState.date;
+  writeObjectApixu = (city) => {
+    let data = JSON.parse(localStorage.getItem(city + "A"))
+    let datePastRequest = data.date;
     let dateNow = Date.parse(new Date());
     let time = this.getDate(datePastRequest);
-    if ((dateNow - datePastRequest) > 7200000) {
+    if ((dateNow - datePastRequest) > 7200000)
       this.getWeatherResourceApixu(city)
-    }
-    else {
-      let obState = JSON.parse(localStorage.getItem(city));
-    }
+    else
+      this.assignState(data, time);
+  }
+
+  assignState = (data, time) => {
     this.setState({
-      temp: obState.temp,
-      city: obState.city,
-      country: obState.country,
-      resource: obState.resource,
+      temp: data.temp,
+      city: data.city,
+      country: data.country,
+      resource: data.resource,
       date: time,
       error: undefined
     });
   }
 
-  getDate = (datePastRequest) => {
-    let date = new Date();
-    date.setTime(datePastRequest);
-    let minutes = date.getMinutes();
-    if (minutes < 10) { minutes = '0' + minutes }
-    let seconds =date.getSeconds();
-    if (seconds < 10) { seconds = '0' + seconds }
-    let time = date.getHours() + ":" + minutes + ":" + seconds;
-    return time;
-  }
+ 
+getDate = (datePastRequest) => {
+  let date = new Date();
+  date.setTime(datePastRequest);
+  let minutes = date.getMinutes();
+  if (minutes < 10) { minutes = '0' + minutes }
+  let seconds = date.getSeconds();
+  if (seconds < 10) { seconds = '0' + seconds }
+  let time = date.getHours() + ":" + minutes + ":" + seconds;
+  return time;
+}
+
   ob = {
     temp: undefined,
     city: undefined,
@@ -129,7 +115,7 @@ class App extends React.Component {
   }
 
   getWeatherOpenWeatherMap = async (city) => {
-    await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY1}&units=metric`)
+    await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.REACT_APP_WEATHER_API_KEY1}&units=metric`)
       .then(response => response.json())
       .then(data => {
         const dateRequest = Date.parse(new Date())
@@ -150,18 +136,12 @@ class App extends React.Component {
         localStorage.setItem(city + "O", JSON.stringify(this.ob))
       })
       .catch(() => {
-        this.setState({
-          temp: undefined,
-          city: undefined,
-          country: undefined,
-          resource: undefined,
-          error: "Введены неверные данные!",
-        });
+        this.showError();
       });
   }
 
   getWeatherResourceApixu = async (city) => {
-    await fetch(`http://api.apixu.com/v1/current.json?key=${API_KEY2}&q=${city}`)
+    await fetch(`http://api.apixu.com/v1/current.json?key=${process.env.REACT_APP_WEATHER_API_KEY2}&q=${city}`)
       .then(response => response.json())
       .then(data => {
         const dateRequest = Date.parse(new Date())
@@ -182,32 +162,18 @@ class App extends React.Component {
         localStorage.setItem(city + "A", JSON.stringify(this.ob))
       })
       .catch(() => {
-        this.setState({
-          temp: undefined,
-          city: undefined,
-          country: undefined,
-          resource: undefined,
-          error: "Введены неверные данные!",
-        });
+        this.showError();
       });
   }
 
-  getSelect = (city) => {
-    let select = document.querySelector("#sel");
-    let sel = select.value;
-    console.log("selectttttttt", sel);
-    if (city) {
-      this.choiseResource(city, sel);
-    }
-    else {
-      this.setState({
-        temp: undefined,
-        city: undefined,
-        country: undefined,
-        resource: undefined,
-        error: "Введите название города!"
-      });
-    }
+  showError = () =>{
+    this.setState({
+      temp: undefined,
+      city: undefined,
+      country: undefined,
+      resource: undefined,
+      error: "Введены неверные данные!",
+    });
   }
 
   render() {
@@ -217,8 +183,8 @@ class App extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col-sm-5 form">
-              <Info />
-              <Form weather={this.readText} />
+              <Info city={cityCurrent} />
+              <Form w={this.choiseResource} />
               <Weather
                 temp={temp}
                 city={city}

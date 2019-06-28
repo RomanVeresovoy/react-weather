@@ -6,21 +6,21 @@ body {
 .container {
     padding: 10px;
     width: 100%;
-  }
-  
-  @media (min-width: 500px) {
+}
+
+@media (min-width: 500px) {
     .container {
-      padding: 20px;
-      font-size: 1.5em;
+        padding: 20px;
+        font-size: 1.5em;
     }
-  }
-  
-  @media (min-width: 800px) {
+}
+
+@media (min-width: 800px) {
     .containerы {
-      padding: 40px;
-      font-size: 2em;
+        padding: 40px;
+        font-size: 2em;
     }
-  }
+}
 
 .wrapper {
     border: 2px solid #fdfdfd;
@@ -29,17 +29,17 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background: rgba(45, 176, 224, 1);
-    background: -moz-linear-gradient(45deg, rgba(45, 176, 224, 1) 0%, rgba(96, 40, 168, 1) 100%);
-    background: -webkit-linear-gradient(45deg, rgba(45, 176, 224, 1) 0%, rgba(96, 40, 168, 1) 100%);
-    background: -o-linear-gradient(45deg, rgba(45, 176, 224, 1) 0%, rgba(96, 40, 168, 1) 100%);
-    background: -ms-linear-gradient(45deg, rgba(45, 176, 224, 1) 0%, rgba(96, 40, 168, 1) 100%);
-    background: linear-gradient(45deg, rgba(45, 176, 224, 1) 0%, rgba(96, 40, 168, 1) 100%);
+    background: rgb(48, 238, 31);
+    background: -moz-linear-gradient(45deg, rgba(61, 243, 243, 0.849) 0%, rgba(96, 40, 168, 1) 100%);
+    background: -webkit-linear-gradient(45deg, rgba(61, 243, 243, 0.849) 0%, rgba(96, 40, 168, 1) 100%);
+    background: -o-linear-gradient(45deg, rgb(61, 243, 243, 0.849) 0%, rgba(96, 40, 168, 1) 100%);
+    background: -ms-linear-gradient(45deg, rgb(61, 243, 243, 0.849) 0%, rgba(96, 40, 168, 1) 100%);
+    background: linear-gradient(45deg, rgb(61, 243, 243, 0.849) 0%, rgba(96, 40, 168, 1) 100%);
     filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#2db0e0', endColorstr='#6028a8', GradientType=1);
 }
 
 .form {
-    margin:0 auto;
+    margin: 0 auto;
     border: 2px solid #fdfdfd;
     padding-top: 80px;
 }
@@ -73,16 +73,20 @@ input::-moz-placeholder {
     color: #103a65;
 }
 
-button {
+ button {
+    font-size: 0.8em;
     border: 2px solid #103a65;
     border-bottom: 4px solid #103a65;
-    padding: 3px 20px;
+    padding: 0px 10px;
     background-color: #235d9c;
     color: #fff;
     margin-bottom: 10px;
-}
+    float: left;
+    position: relative;
+    overflow: hidden;
+} 
 
-.con{
+.con {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -90,9 +94,10 @@ button {
 }
 
 select {
+    font-size: 0.7em;
     padding-top: 60px;
     border: 1px solid #103a65;
-    padding: 3px 10px;;
+    padding: 3px;
     border-radius: 2px;
     cursor: pointer;
     background-color: #235d9c;
@@ -109,7 +114,10 @@ button:active {
 }
 
 .info h4 {
-    font-size: 3em;
+    font-size: 2em;
+    color: #fff;
+}
+.info h6 {
     color: #fff;
 }
 
